@@ -1,0 +1,28 @@
+name: CasieAttractionOperate
+author: CasieBarie
+version: 1.0
+description: Attraction operate plugin!
+main: me.casiebarie.casieattractionoperate.Main
+api-version: 1.13
+commands:
+  CAO:
+    description: Base command of CasieAttractionOperate.
+  CAOinfo:
+    description: Help command of CasieAttractionOperate.
+  CAOadmin:
+    description: Admin command of CasieAttractionOperate.
+permissions:
+   CAO.*:
+      description: Gives permission to all commands.
+      children:
+         CAO.use: true
+         CAO.admin: true
+         CAO.menu.use: true
+         CAO.menu.admin: true
+         CAO.menu.cmd: true
+   CAO.use:
+      description: Gives permission to the CAO command.
+      default: op
+   CAO.admin:
+      description: Gives permission to the CAOadmin command.
+      default: op

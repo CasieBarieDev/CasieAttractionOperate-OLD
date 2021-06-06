@@ -1,0 +1,71 @@
+#
+#   _____          _              _   _                  _   _              ____                       _       
+#  / ____|        (_)        /\  | | | |                | | (_)            / __ \                     | |      
+# | |     __ _ ___ _  ___   /  \ | |_| |_ _ __ __ _  ___| |_ _  ___  _ __ | |  | |_ __   ___ _ __ __ _| |_ ___ 
+# | |    / _` / __| |/ _ \ / /\ \| __| __| '__/ _` |/ __| __| |/ _ \| '_ \| |  | | '_ \ / _ \ '__/ _` | __/ _ \
+# | |___| (_| \__ \ |  __// ____ \ |_| |_| | | (_| | (__| |_| | (_) | | | | |__| | |_) |  __/ | | (_| | ||  __/
+#  \_____\__,_|___/_|\___/_/    \_\__|\__|_|  \__,_|\___|\__|_|\___/|_| |_|\____/| .__/ \___|_|  \__,_|\__\___|
+#                                                                                | |                           
+#                                                                                |_|                           
+#
+# --------------------------------------- ATTRACTIONS: ---------------------------------------
+# Copy the sample file in the Attractions and give it the name of your attraction. 
+# Then add the locations and variables of your system to the Locations section.
+# 
+# *Please don't touch the Status section.*
+#
+# Put the name and location of the file below. (Case Sensitive)
+# * NOTE: You cannot delete the Sample file! This is automatically re-created so that you always have a sample. *
+Attractions:
+   Sample: Attractions/Sample.yml
+# -------------------------------------------------------------------------------------------
+
+# ---------------------------------------- COMMANDS: ----------------------------------------
+# You can edit the names of the commands u use. Example: 'RELEASE: start' to use '/CAO <attraction> start'
+Commands:
+  RESTRAINTS: restraints
+  GATES: gates
+  RELEASE: release
+  POWER: power
+  BUSY: busy
+  STATION: station
+# -------------------------------------------------------------------------------------------
+
+# --------------------------------------- VARIABLES: ---------------------------------------
+# The variables used on the signs.
+# The NoClosed / NoPowerOn is used when it cannot be switched.
+Variables:
+  Open: '&2. &cOpen &2.'
+  Closed: '&2. &aClosed &2.'
+  NoClosed: '&c. &aClosed &c.'
+  ReleaseAllowed: '&aAllowed'
+  ReleaseDisallowed: '&cDisallowed'
+  PowerOn: '&2. &aEnabled &2.'
+  PowerOff: '&2. &cDisabled &2.'
+  NoPowerOn: '&c. &aEnabled &c.'
+  PowerStartup: '&c. &9Starting up.. &c.'
+  PowerShutdown: '&c. &9Shutting down.. &c.'
+# -------------------------------------------------------------------------------------------
+
+# ---------------------------------------- MESSAGES: ----------------------------------------
+# Use 'none' to disable. 
+# Message Placeholders:
+#    %attraction%
+#    %args%
+#    %prefix%
+Messages:
+  Prefix: '&a[&9CAO&a] &8>> &7'
+  
+  NoPermission: '%prefix%&cYou do not have access to this command!'
+  Usage: '%prefix%&4&lUsage: &c&l/CAO %attractie% %args% &c<true/false || TOGGLE/DONE>'
+  UsageAdmin: '%prefix%&4&lUsage: &c&l/CAOADMIN <ReloadConfig/ReloadAttraction> %attraction%'
+  NotInConfig: '%prefix%&cCannot find the file of &d%attraction%&c.'
+  Toggle: '%prefix%%args% &7|| Attraction: &d%attraction%&7.'
+  NoStationPower: '%prefix%&4You cannot change the %args% &4of &d%attraction% &4!'
+  NotPermitted: '%prefix%&4You cannot &6Release &d%attraction% &4.'
+  NotPermittedPower: '%prefix%&4You cannot change the &1Power &4of &d%attraction% &4!'
+  FeatureDisabled: '%prefix%&4You cannot do this!'
+  Reload: '%prefix%&eReloading: &6%args%'
+  
+# -------------------------------------------------------------------------------------------
+# By: CasieBarie || Source Code: https://github.com/CasieBarieDev/CasieAttractionOperate || Support: https://discord.gg/ZptCBHeHyg
