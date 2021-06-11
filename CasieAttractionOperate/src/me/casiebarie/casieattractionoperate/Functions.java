@@ -29,7 +29,7 @@ public class Functions {
 		if(LegacyVersions.contains(BukkitVersion)) {return true;}
 		else if (Versions.contains(BukkitVersion)) {return false;}
 		else {
-			Bukkit.getLogger().warning("Incompatible version. Disabling plugin");
+			Bukkit.getLogger().warning("Incompatible version. Disabling plugin  (" + BukkitVersion + ")");
 			Bukkit.getServer().getPluginManager().disablePlugin((Plugin)this.plugin);
 			return false;
 		}
@@ -53,7 +53,7 @@ public class Functions {
 	}
 	public void sendMessage(CommandSender sender, String msgName, String attractionName, String args) {
 		if(sender == null) {return;}
-		if(config.contains(".Messages." + msgName) && !config.getString(".Messages." + msgName).equals("none")) {
+		if(config.contains(".Messages." + msgName) && !config.getString(".Messages." + msgName).equals("")) {
 			String prefix = config.getString(".Messages.Prefix").equals("none") ? "" : config.getString(".Messages.Prefix");
 			String msg = config.getString(".Messages." + msgName).replaceAll("%attraction%", attractionName).replaceAll("%args%", String.valueOf(args) + "&r").replaceAll("%prefix%", prefix);
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));

@@ -45,11 +45,8 @@ public class Main extends JavaPlugin{
 		if(!sampleFile.exists()) {
 			this.getLogger().info("Sample file not found! Making one.");
 			sampleFolder.mkdir();
-			try {
-				sampleFile.createNewFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			try {sampleFile.createNewFile();
+			} catch (Exception e) {e.printStackTrace();}
 		}
 		copy(getResource("sample.yml"), sampleFile);
 	}

@@ -152,9 +152,7 @@ public class CAO implements CommandExecutor{
 					aFile.set(".Status.POWER", "Startup");
 					f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(3) + ": " + config.getString(".Variables.PowerStartup"));
 					SetBlock("Power", true, aFile1, aFile, aWorld);
-				} else{
-					f.sendMessage(sender, "NotPermittedPower", aName, "");
-				}
+				} else{f.sendMessage(sender, "NotPermittedPower", aName, "");}
 			} else if (mode.toUpperCase().equals("DONE")) {
 				if(aFile.getString(".Status.POWER").equals("Startup")) {
 					aFile.set(".Status.POWER", "Enabled");
@@ -245,10 +243,11 @@ public class CAO implements CommandExecutor{
 	
 	//Realease status block
 	private void releaseStatus(File aFile1, FileConfiguration aFile, String aWorld) {
-		if(!aFile.getString(".Locations.StatusLocation").equals("none")) {
-			String[] statusLoc = aFile.getString(".Locations.StatusLocation").split(" ");
+		try {
+			if(!aFile.getString(".Locations.Status").equals("none")) {
+			String[] statusLoc = aFile.getString(".Locations.Status").split(" ");
 			Block statusBlock = plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(statusLoc[0]), Integer.parseInt(statusLoc[1]), Integer.parseInt(statusLoc[2]));
-			String[] releaseLoc = aFile.getString(".Locations.ReleaseLocation").split(" ");
+			String[] releaseLoc = aFile.getString(".Locations.Release").split(" ");
 			Block releaseBlock = plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(releaseLoc[0]), Integer.parseInt(releaseLoc[1]), Integer.parseInt(releaseLoc[2]));
 			if(releaseBlock.getType() == Material.REDSTONE_BLOCK) {
 				if(f.isLegacy()) {
@@ -273,6 +272,7 @@ public class CAO implements CommandExecutor{
 				} else {statusBlock.setType(Material.RED_WOOL);}
 			}
 		}
+		} catch (NumberFormatException e) {}
 	}
 	
 	//Check stationmode
@@ -287,38 +287,39 @@ public class CAO implements CommandExecutor{
 	
 	//SetBlock
 	private void SetBlock(String mode, boolean blockMode, File aFile1, FileConfiguration aFile, String aWorld) {
-		String[] location = aFile.getString(".Locations." + mode + "Location").split(" ");
-		org.bukkit.block.Block block = plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(location[0]), Integer.parseInt(location[1]), Integer.parseInt(location[2]));
-		if(f.isLegacy()) {
-			if(blockMode) {
-				block.setType(Material.REDSTONE_BLOCK);
+		try {
+			String[] location = aFile.getString(".Locations." + mode).split(" ");
+			Block block = plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(location[0]), Integer.parseInt(location[1]), Integer.parseInt(location[2]));
+			if(f.isLegacy()) {
+				if(blockMode) {
+					block.setType(Material.REDSTONE_BLOCK);
+				} else {
+					block.setType(Material.matchMaterial("WOOL"));
+					BlockState blockState = block.getState();
+					blockState.setData(new Wool(DyeColor.LIME));
+					blockState.update();
+				}
 			} else {
-				block.setType(Material.matchMaterial("WOOL"));
-				BlockState blockState = block.getState();
-				blockState.setData(new Wool(DyeColor.LIME));
-				blockState.update();
+				if(f.isLegacy()) {block.setType(Material.REDSTONE_BLOCK);
+				} else {block.setType(Material.LIME_WOOL);}
 			}
-		} else {
-			if(f.isLegacy()) {block.setType(Material.REDSTONE_BLOCK);
-			} else {block.setType(Material.LIME_WOOL);}
-		}
+		} catch (NumberFormatException e) {}
 	}
 	
 	//SetSign
 	private void setSign(String mode, String var, File aFile1, FileConfiguration aFile, String aWorld) {
-		String[] Location = aFile.getString(".Locations." + mode + "VarLocation").split(" ");
-		Sign sign = (Sign) plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(Location[0]), Integer.parseInt(Location[1]), Integer.parseInt(Location[2])).getState();
-		String signText = ChatColor.translateAlternateColorCodes('&', config.getString(".Variables." + var));
-		sign.setLine(aFile.getInt(".Settings.signLine")-1, signText);
-		sign.update();
+		try {
+			String[] Location = aFile.getString(".Locations." + mode + "Var").split(" ");
+			Sign sign = (Sign) plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(Location[0]), Integer.parseInt(Location[1]), Integer.parseInt(Location[2])).getState();
+			String signText = ChatColor.translateAlternateColorCodes('&', config.getString(".Variables." + var));
+			sign.setLine(aFile.getInt(".Settings.signLine")-1, signText);
+			sign.update();
+		} catch (NumberFormatException e) {}
 	}
 	
 	//Save AttractionFile
 	private void saveAttractionFile(FileConfiguration aFile, File aFile1) {
-		try {
-			aFile.save(aFile1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		try {aFile.save(aFile1);
+		} catch (IOException e) {e.printStackTrace();}
 	}
 }

@@ -11,12 +11,12 @@ Status:
   BUSY: false
   STATION: false
 Locations:
-  RestraintsLocation: <X Y Z>
-  RestraintsVarLocation: <X Y Z>        #'none' to disable      VarLocation is the location of the sign where a variable will be placed on.
-  GatesLocation: <X Y Z>
-  GatesVarLocation: <X Y Z>             #'none' to disable
-  ReleaseLocation: <X Y Z>
-  ReleaseVarLocation: <X Y Z>           #'none' to disable
-  PowerLocation: <X Y Z>
-  PowerVarLocation: <X Y Z>             #'none' to disable
-  StatusLocation: <X Y Z>               #'none' to disable      The location of the output status. The block changes to different colors: RED = Not Allowed, ORANGE = Allowed, GREEN = RELEASING.
+  Restraints: <X Y Z>
+  RestraintsVar: <X Y Z>        #'none' to disable      Var is the location of the sign where a variable will be placed on.
+  Gates: <X Y Z>
+  GatesVar: <X Y Z>             #'none' to disable
+  Release: <X Y Z>
+  ReleaseVar: <X Y Z>           #'none' to disable
+  Power: <X Y Z>
+  PowerVar: <X Y Z>             #'none' to disable
+  Status: <X Y Z>               #'none' to disable      The location of the output status. The block changes to different colors: RED = Not Allowed, ORANGE = Allowed, GREEN = RELEASING.
