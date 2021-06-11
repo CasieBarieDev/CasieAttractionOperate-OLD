@@ -1,8 +1,8 @@
 Settings:
-  stationMode: true                #If true, the gates and restraints can be opened when BUSY is true. The function STATION will be activated. (Handy for multi-train rides)
-  releaseTime: 20                  #The time in ticks for how long the block remains a redstone block.
-  signLine: 3                      #The line in which the variable is placed. (1 to 4)
-  world: <worldname>               #The world of the attraction.
+  StationMode: true                #If true, the gates and restraints can be opened when BUSY is true. The function STATION will be activated. (Handy for multi-train rides)
+  ReleaseTime: 20                  #The time in ticks for how long the block remains a redstone block.
+  SignLine: 3                      #The line in which the variable is placed. (1 to 4)
+  World: <worldname>               #The world of the attraction.
 Status:
   RESTRAINTS: false
   GATES: false

@@ -41,7 +41,7 @@ public class CAO implements CommandExecutor{
 				if(!args[0].equals("Sample")) {
 					File aFile1 = new File(plugin.getDataFolder() + "/" + config.getString(".Attractions." + args[0]));
 					FileConfiguration aFile = YamlConfiguration.loadConfiguration(aFile1);
-					String aWorld = aFile.getString(".Settings.world");
+					String aWorld = aFile.getString(".Settings.World");
 					if(aFile1.exists()) {
 						if(args[1].toUpperCase().equals(f.GetCmds().get(0).toUpperCase())) {
 							restraints(sender, args[0], aFile1, aFile, aWorld);
@@ -124,7 +124,7 @@ public class CAO implements CommandExecutor{
 	//Release
 	public void release(CommandSender sender, String aName, File aFile1, FileConfiguration aFile, String aWorld) {
 		if(aFile.getBoolean(".Status.RELEASE") == true) {
-			long releaseTime = aFile.getLong(".Settings.releaseTime");
+			long releaseTime = aFile.getLong(".Settings.ReleaseTime");
 			SetBlock("Release", true, aFile1, aFile, aWorld);
 			f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(2));
 			aFile.set(".Status.BUSY", true);
@@ -182,7 +182,7 @@ public class CAO implements CommandExecutor{
 	
 	//Station
 	public void station(CommandSender sender, String aName, String bool, File aFile1, FileConfiguration aFile, String aWorld) {
-		if(aFile.getBoolean(".Settings.stationmode") == true) {
+		if(aFile.getBoolean(".Settings.StationMode") == true) {
 			if(bool.toUpperCase().equals("TRUE")) {
 				aFile.set(".Status.STATION", true);
 				f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(5) + ": " + "&cTRUE&r");
@@ -277,9 +277,9 @@ public class CAO implements CommandExecutor{
 	
 	//Check stationmode
 	private void stationMode(File aFile1, FileConfiguration aFile) {
-		if(aFile.getBoolean(".Settings.stationmode") == false && aFile.getBoolean(".Status.BUSY") == true) {
+		if(aFile.getBoolean(".Settings.StationMode") == false && aFile.getBoolean(".Status.BUSY") == true) {
 			aFile.set(".Status.STATION", false);
-		} else if(aFile.getBoolean(".Settings.stationmode") == false && aFile.getBoolean(".Status.BUSY") == false) {
+		} else if(aFile.getBoolean(".Settings.StationMode") == false && aFile.getBoolean(".Status.BUSY") == false) {
 			aFile.set(".Status.STATION", true);
 		}
 		saveAttractionFile(aFile, aFile1);
@@ -312,7 +312,7 @@ public class CAO implements CommandExecutor{
 			String[] Location = aFile.getString(".Locations." + mode + "Var").split(" ");
 			Sign sign = (Sign) plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(Location[0]), Integer.parseInt(Location[1]), Integer.parseInt(Location[2])).getState();
 			String signText = ChatColor.translateAlternateColorCodes('&', config.getString(".Variables." + var));
-			sign.setLine(aFile.getInt(".Settings.signLine")-1, signText);
+			sign.setLine(aFile.getInt(".Settings.SignLine")-1, signText);
 			sign.update();
 		} catch (NumberFormatException e) {}
 	}
