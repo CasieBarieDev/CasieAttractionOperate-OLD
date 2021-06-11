@@ -300,7 +300,7 @@ public class CAO implements CommandExecutor{
 					blockState.update();
 				}
 			} else {
-				if(f.isLegacy()) {block.setType(Material.REDSTONE_BLOCK);
+				if(blockMode) {block.setType(Material.REDSTONE_BLOCK);
 				} else {block.setType(Material.LIME_WOOL);}
 			}
 		} catch (NumberFormatException e) {}

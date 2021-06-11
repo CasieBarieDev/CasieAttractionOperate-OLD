@@ -22,7 +22,7 @@ public class Main extends JavaPlugin{
 		api = new API(this, cao, f);
 		
 		//UpdateChecker
-		new UpdateChecker(this, 1).getVersion(version -> {
+		new UpdateChecker(this, 93203).getVersion(version -> {
 			if(this.getDescription().getVersion().equalsIgnoreCase(version)) {
 				this.getLogger().info("You are using the most recent version. (v" + this.getDescription().getVersion() + ")");
 			} else {
