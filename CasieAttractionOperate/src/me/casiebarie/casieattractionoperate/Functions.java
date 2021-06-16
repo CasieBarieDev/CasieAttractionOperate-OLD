@@ -6,11 +6,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class Functions {
@@ -22,6 +24,7 @@ public class Functions {
 		reloadConfig(null);
 		isLegacy();
 	}
+
 	public boolean isLegacy() {
 		final String BukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit.v", "");
 		final List<String> LegacyVersions = Arrays.asList("1_8_R1", "1_8_R2", "1_8_R3", "1_9_R1", "1_9_R2", "1_10_R1", "1_11_R1", "1_12_R1");
@@ -34,12 +37,14 @@ public class Functions {
 			return false;
 		}
 	}
+
 	public void reloadConfig(final CommandSender sender) {
 		File cFile = new File(this.plugin.getDataFolder() + "/config.yml");
 		config = (FileConfiguration)YamlConfiguration.loadConfiguration(cFile);
 		plugin.saveDefaultConfig();
 		if(sender != null) {sendMessage(sender, "Reload", "", "Config");}
 	}
+
 	public FileConfiguration GetConfig() {return Functions.config;}
 	public ArrayList<String> GetCmds() {
 		ArrayList<String> modes = new ArrayList<String>();
@@ -51,11 +56,56 @@ public class Functions {
 		modes.add(5, config.getString(".Commands.STATION"));
 		return modes;
 	}
+
+	public String getVar(File aFile1, FileConfiguration aFile, String aWorld, String mode) {
+		if(mode.toUpperCase().equals(GetCmds().get(0).toUpperCase()) || mode.toUpperCase().equals("RESTRAINTS")) {
+			//Restraints
+			if(aFile.getBoolean(".Status.RESTRAINTS") == false && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+				return config.getString(".Variables.Closed");
+			} else if(aFile.getBoolean(".Status.RESTRAINTS") == true && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+				return config.getString(".Variables.Open");
+			} else {
+				return config.getString(".Variables.NoClosed");
+			}
+		} else if (mode.toUpperCase().equals(GetCmds().get(1).toUpperCase()) || mode.toUpperCase().equals("GATES")) {
+			//GATES
+			if(aFile.getBoolean(".Status.GATES") == false && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+				return config.getString(".Variables.Closed");
+			} else if(aFile.getBoolean(".Status.GATES") == true && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+				return config.getString(".Variables.Open");
+			} else {
+				return config.getString(".Variables.NoClosed");
+			}
+		} else if (mode.toUpperCase().equals(GetCmds().get(2).toUpperCase()) || mode.toUpperCase().equals("RELEASE")) {
+			//RELEASE
+			if(aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.GATES") == false && aFile.getBoolean(".Status.RESTRAINTS") == false && aFile.getBoolean(".Status.BUSY") == false) {
+				return config.getString(".Variables.ReleaseAllowed");
+			} else {
+				return config.getString(".Variables.ReleaseDisallowed");
+			}
+		} else if (mode.toUpperCase().equals(GetCmds().get(3).toUpperCase()) || mode.toUpperCase().equals("POWER")) {
+			//POWER
+			if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == true) {
+				return config.getString(".Variables.PowerOn");
+			} else if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == false) {
+				return config.getString(".Variables.NoPowerOn");
+			} else if(aFile.getString(".Status.POWER").equals("Disabled")) {
+				return config.getString(".Variables.PowerOff");
+			} else if(aFile.getString(".Status.POWER").equals("Startup")) {
+				return config.getString(".Variables.PowerStartup");
+			} else if(aFile.getString(".Status.POWER").equals("Shutdown")) {
+				return config.getString(".Variables.PowerShutdown");
+			}
+		} else {return "&c! MODE NOT FOUND !";}
+		return null;
+	}
+
 	public void sendMessage(CommandSender sender, String msgName, String attractionName, String args) {
 		if(sender == null) {return;}
 		if(config.contains(".Messages." + msgName) && !config.getString(".Messages." + msgName).equals("")) {
 			String prefix = config.getString(".Messages.Prefix").equals("none") ? "" : config.getString(".Messages.Prefix");
 			String msg = config.getString(".Messages." + msgName).replaceAll("%attraction%", attractionName).replaceAll("%args%", String.valueOf(args) + "&r").replaceAll("%prefix%", prefix);
+			if(plugin.papiPresent()) {msg = PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, msg);}
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
 		}
 	}

@@ -1,6 +1,8 @@
 Settings:
   StationMode: true                #If true, the gates and restraints can be opened when BUSY is true. The function STATION will be activated. (Handy for multi-train rides)
   ReleaseTime: 20                  #The time in ticks for how long the block remains a redstone block.
+  ClickSign: true                  #If true you can click the sign to run the command.
+  ClickSignMessage: true           #If you get a message when you click the sign.
   SignLine: 3                      #The line in which the variable is placed. (1 to 4)
   World: <worldname>               #The world of the attraction.
 Status:
@@ -12,11 +14,11 @@ Status:
   STATION: false
 Locations:
   Restraints: <X Y Z>
-  RestraintsVar: <X Y Z>        #'none' to disable      Var is the location of the sign where a variable will be placed on.
+  RestraintsSign: <X Y Z>
   Gates: <X Y Z>
-  GatesVar: <X Y Z>             #'none' to disable
+  GatesSign: <X Y Z>
   Release: <X Y Z>
-  ReleaseVar: <X Y Z>           #'none' to disable
+  ReleaseSign: <X Y Z>
   Power: <X Y Z>
-  PowerVar: <X Y Z>             #'none' to disable
-  Status: <X Y Z>               #'none' to disable      The location of the output status. The block changes to different colors: RED = Not Allowed, ORANGE = Allowed, GREEN = RELEASING.
+  PowerSign: <X Y Z>
+  Status: <X Y Z>               #The location of the output status. The block changes to different colors: RED = Not Allowed, ORANGE = Allowed, GREEN = RELEASING.

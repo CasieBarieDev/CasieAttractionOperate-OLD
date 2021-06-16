@@ -53,17 +53,19 @@ Variables:
 #    %attraction%
 #    %args%
 #    %prefix%
+# PlaceholderAPI supported.
 Messages:
   Prefix: '&a[&9CAO&a] &8>> &7'
   
   NoPermission: '%prefix%&cYou do not have access to this command!'
   Usage: '%prefix%&4&lUsage: &c/CAO %attraction% %args% &c<true/false || TOGGLE/DONE>'
-  UsageAdmin: '%prefix%&4&lUsage: &c&l/CAOADMIN <ReloadConfig/ReloadAttraction> %attraction%'
+  UsageAdmin: '%prefix%&4&lUsage: &c/CAOADMIN <ReloadConfig/ReloadAttraction> %attraction%'
+  UsageInfo: '%prefix%&4&lUsage: &c/CAOINFO <Setup/Commands/Placeholders/Support>'
   NotInConfig: '%prefix%&cCannot find the file of &d%attraction%&c.'
   Toggle: '%prefix%%args% &7|| Attraction: &d%attraction%&7.'
-  NoStationPower: '%prefix%&4You cannot change the %args% &4of &d%attraction% &4!'
+  NoStationPower: '%prefix%&4You cannot change the %args% &4of &d%attraction%&4!'
   NotPermitted: '%prefix%&4You cannot &6Release &d%attraction% &4.'
-  NotPermittedPower: '%prefix%&4You cannot change the &1Power &4of &d%attraction% &4!'
+  NotPermittedPower: '%prefix%&4You cannot change the &1Power &4of &d%attraction%&4!'
   FeatureDisabled: '%prefix%&4This feature is not enabled in this state!'
   Reload: '%prefix%&eReloading: &6%args%'
   

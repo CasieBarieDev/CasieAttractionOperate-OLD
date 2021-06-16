@@ -1,3 +1,4 @@
+
 package me.casiebarie.casieattractionoperate;
 
 import java.io.File;
@@ -66,20 +67,20 @@ public class CAO implements CommandExecutor{
 		//CAOADMIN
 		if(cmd.getName().equalsIgnoreCase("CAOADMIN")) {
 			if (sender.hasPermission("CAO.admin")) {
-				if(args.length >= 1 && args.length <= 2) {
+				if(args.length == 1 || args.length == 2) {
 					if(args[0].toUpperCase().equals("RELOADCONFIG")) {
 						f.reloadConfig(sender);
 					} else if (args[0].toUpperCase().equals("RELOADATTRACTION") && args.length == 2) {
 						File aFile1 = new File(plugin.getDataFolder() + "/" + config.getString(".Attractions." + args[1]));
 						FileConfiguration aFile = YamlConfiguration.loadConfiguration(aFile1);
-						String aWorld = aFile.getString(".Settings.world");
+						String aWorld = aFile.getString(".Settings.World");
 						if (aFile1.exists()) {
 							if(!args[1].equals("Sample")) {
 								varControl(aFile1, aFile, aWorld);
 								f.sendMessage(sender, "Reload", "", args[1]);
 							} else {f.sendMessage(sender, "FeatureDisabled", "", "");}
 						} else {f.sendMessage(sender, "NotInConfig", args[1], "");}
-					} else {f.sendMessage(sender, "UsageAdmin", args[1], "");}
+					} else {f.sendMessage(sender, "UsageAdmin", "<attraction>", "");}
 				} else {f.sendMessage(sender, "UsageAdmin", "<attraction>", "");}
 			} else {f.sendMessage(sender, "NoPermission", "", "");}
 		} return false;
@@ -87,6 +88,7 @@ public class CAO implements CommandExecutor{
 	
 	//Restraints
 	public void restraints(CommandSender sender, String aName, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		stationMode(aFile1, aFile);
 		if(aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
 			if(aFile.getBoolean(".Status.RESTRAINTS") == false) {
@@ -105,6 +107,7 @@ public class CAO implements CommandExecutor{
 	
 	//Gates
 	public void gates(CommandSender sender, String aName, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		stationMode(aFile1, aFile);
 		if(aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
 			if(aFile.getBoolean(".Status.GATES") == false) {
@@ -123,6 +126,7 @@ public class CAO implements CommandExecutor{
 	
 	//Release
 	public void release(CommandSender sender, String aName, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		if(aFile.getBoolean(".Status.RELEASE") == true) {
 			long releaseTime = aFile.getLong(".Settings.ReleaseTime");
 			SetBlock("Release", true, aFile1, aFile, aWorld);
@@ -142,16 +146,17 @@ public class CAO implements CommandExecutor{
 	
 	//Power
 	public void power(CommandSender sender, String aName, String mode, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		if(mode.toUpperCase().equals("TOGGLE") || mode.toUpperCase().equals("DONE")) {
 			if(mode.toUpperCase().equals("TOGGLE")) {
 				if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == true) {
+					SetBlock("Power", false, aFile1, aFile, aWorld);
 					aFile.set(".Status.POWER", "Shutdown");
 					f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(3) + ": " + config.getString(".Variables.PowerShutdown"));
-					SetBlock("Power", false, aFile1, aFile, aWorld);
 				} else if(aFile.getString(".Status.POWER").equals("Disabled")) {
+					SetBlock("Power", true, aFile1, aFile, aWorld);
 					aFile.set(".Status.POWER", "Startup");
 					f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(3) + ": " + config.getString(".Variables.PowerStartup"));
-					SetBlock("Power", true, aFile1, aFile, aWorld);
 				} else{f.sendMessage(sender, "NotPermittedPower", aName, "");}
 			} else if (mode.toUpperCase().equals("DONE")) {
 				if(aFile.getString(".Status.POWER").equals("Startup")) {
@@ -169,6 +174,7 @@ public class CAO implements CommandExecutor{
 	
 	//Busy
 	public void busy(CommandSender sender, String aName, String bool, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		if(bool.toUpperCase().equals("TRUE")) {
 			aFile.set(".Status.BUSY", true);
 			f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(4) + ": " + "&cTRUE&r");
@@ -182,6 +188,7 @@ public class CAO implements CommandExecutor{
 	
 	//Station
 	public void station(CommandSender sender, String aName, String bool, File aFile1, FileConfiguration aFile, String aWorld) {
+		config = f.GetConfig();
 		if(aFile.getBoolean(".Settings.StationMode") == true) {
 			if(bool.toUpperCase().equals("TRUE")) {
 				aFile.set(".Status.STATION", true);
@@ -189,9 +196,7 @@ public class CAO implements CommandExecutor{
 			} else if(bool.toUpperCase().equals("FALSE")) {
 				aFile.set(".Status.STATION", false);
 				f.sendMessage(sender, "Toggle", aName, f.GetCmds().get(4) + ": " + "&aFALSE&r");
-			} else {
-				f.sendMessage(sender, "Usage", aName, "");
-			}
+			} else {f.sendMessage(sender, "Usage", aName, "");}
 		} else {f.sendMessage(sender, "FeatureDisabled", aName, "");}
 		saveAttractionFile(aFile, aFile1);
 		varControl(aFile1, aFile, aWorld);
@@ -201,41 +206,41 @@ public class CAO implements CommandExecutor{
 	private void varControl(File aFile1, FileConfiguration aFile, String aWorld) {
 		stationMode(aFile1, aFile);
 		//Poortjes
-		if(aFile.getBoolean(".Status.GATES") == false && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+		if(f.getVar(aFile1, aFile, aWorld, "GATES").equals(config.getString(".Variables.Closed"))) {
 			setSign("Gates", "Closed", aFile1, aFile, aWorld);
-		} else if(aFile.getBoolean(".Status.GATES") == true && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "GATES").equals(config.getString(".Variables.Open"))) {
 			setSign("Gates", "Open", aFile1, aFile, aWorld);
-		} else {
+		} else if(f.getVar(aFile1, aFile, aWorld, "GATES").equals(config.getString(".Variables.NoClosed"))) {
 			setSign("Gates", "NoClosed", aFile1, aFile, aWorld);
 		}
 		//Beugels
-		if(aFile.getBoolean(".Status.RESTRAINTS") == false && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+		if(f.getVar(aFile1, aFile, aWorld, "RESTRAINTS").equals(config.getString(".Variables.Closed"))) {
 			setSign("Restraints", "Closed", aFile1, aFile, aWorld);
-		} else if(aFile.getBoolean(".Status.RESTRAINTS") == true && aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled")) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "RESTRAINTS").equals(config.getString(".Variables.Open"))) {
 			setSign("Restraints", "Open", aFile1, aFile, aWorld);
-		} else {
+		} else if(f.getVar(aFile1, aFile, aWorld, "RESTRAINTS").equals(config.getString(".Variables.NoClosed"))){
 			setSign("Restraints", "NoClosed", aFile1, aFile, aWorld);
 		}
 		//Vrijgeven
-		if(aFile.getBoolean(".Status.STATION") == true && aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.GATES") == false && aFile.getBoolean(".Status.RESTRAINTS") == false && aFile.getBoolean(".Status.BUSY") == false) {
+		if(f.getVar(aFile1, aFile, aWorld, "RELEASE").equals(config.getString(".Variables.ReleaseAllowed"))) {
 			setSign("Release", "ReleaseAllowed", aFile1, aFile, aWorld);
 			aFile.set(".Status.RELEASE", true);
 			saveAttractionFile(aFile, aFile1);
-		} else {
+		} else if(f.getVar(aFile1, aFile, aWorld, "RELEASE").equals(config.getString(".Variables.ReleaseDisallowed"))){
 			setSign("Release", "ReleaseDisallowed", aFile1, aFile, aWorld);
 			aFile.set(".Status.RELEASE", false);
 			saveAttractionFile(aFile, aFile1);
 		}
 		//Power
-		if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == true) {
+		if(f.getVar(aFile1, aFile, aWorld, "POWER").equals(config.getString(".Variables.PowerOn"))) {
 			setSign("Power", "PowerOn", aFile1, aFile, aWorld);
-		} else if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == false) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "POWER").equals(config.getString(".Variables.NoPowerOn"))) {
 			setSign("Power", "NoPowerOn", aFile1, aFile, aWorld);
-		} else if(aFile.getString(".Status.POWER").equals("Disabled")) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "POWER").equals(config.getString(".Variables.PowerOff"))) {
 			setSign("Power", "PowerOff", aFile1, aFile, aWorld);
-		} else if(aFile.getString(".Status.POWER").equals("Startup")) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "POWER").equals(config.getString(".Variables.PowerStartup"))) {
 			setSign("Power", "PowerStartup", aFile1, aFile, aWorld);
-		} else if(aFile.getString(".Status.POWER").equals("Shutdown")) {
+		} else if(f.getVar(aFile1, aFile, aWorld, "POWER").equals(config.getString(".Variables.PowerShutdown"))) {
 			setSign("Power", "PowerShutdown", aFile1, aFile, aWorld);
 		}
 		releaseStatus(aFile1, aFile, aWorld);
@@ -309,7 +314,7 @@ public class CAO implements CommandExecutor{
 	//SetSign
 	private void setSign(String mode, String var, File aFile1, FileConfiguration aFile, String aWorld) {
 		try {
-			String[] Location = aFile.getString(".Locations." + mode + "Var").split(" ");
+			String[] Location = aFile.getString(".Locations." + mode + "Sign").split(" ");
 			Sign sign = (Sign) plugin.getServer().getWorld(aWorld).getBlockAt(Integer.parseInt(Location[0]), Integer.parseInt(Location[1]), Integer.parseInt(Location[2])).getState();
 			String signText = ChatColor.translateAlternateColorCodes('&', config.getString(".Variables." + var));
 			sign.setLine(aFile.getInt(".Settings.SignLine")-1, signText);
