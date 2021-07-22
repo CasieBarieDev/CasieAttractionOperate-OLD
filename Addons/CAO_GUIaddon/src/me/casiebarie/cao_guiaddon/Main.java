@@ -26,7 +26,6 @@ public class Main extends JavaPlugin {
 			new Info();
 			updateChecker();
 		} else {
-			//DISABLE PLUGIN
 			getLogger().warning("CasieAttractionOperate not found! Disabling plugin.");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 		}
