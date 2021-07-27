@@ -1,6 +1,6 @@
 name: CasieAttractionOperate
 author: CasieBarie
-version: 2.0
+version: 2.1
 description: Attraction operate plugin!
 main: me.casiebarie.casieattractionoperate.Main
 api-version: 1.13
@@ -17,7 +17,7 @@ permissions:
       description: Gives permission to all commands.
       children:
          CAO.use: true
-         CAO.sign: true
+         CAO.sign.use: true
          CAO.admin: true
          CAO.menu.use: true
          CAO.menu.admin: true

@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -28,7 +28,7 @@ public class Functions {
 	public boolean isLegacy() {
 		final String BukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit.v", "");
 		final List<String> LegacyVersions = Arrays.asList("1_8_R1", "1_8_R2", "1_8_R3", "1_9_R1", "1_9_R2", "1_10_R1", "1_11_R1", "1_12_R1");
-		final List<String> Versions = Arrays.asList("1_13_R1", "1_13_R2", "1_14_R1", "1_15_R1", "1_16_R1", "1_16_R2", "1_16_R3");
+		final List<String> Versions = Arrays.asList("1_13_R1", "1_13_R2", "1_14_R1", "1_15_R1", "1_16_R1", "1_16_R2", "1_16_R3", "1_17_R1", "1_17_R2");
 		if(LegacyVersions.contains(BukkitVersion)) {return true;}
 		else if (Versions.contains(BukkitVersion)) {return false;}
 		else {
@@ -44,6 +44,8 @@ public class Functions {
 		plugin.saveDefaultConfig();
 		if(sender != null) {sendMessage(sender, "Reload", "", "Config");}
 	}
+	
+	public String getUsageMSG() {return "<" + GetCmds().get(0) + "/" + GetCmds().get(1) + "/" + GetCmds().get(2) + "/" + GetCmds().get(3) + "/" + GetCmds().get(4) + "/" + GetCmds().get(5) + ">";}
 
 	public FileConfiguration GetConfig() {return Functions.config;}
 	public ArrayList<String> GetCmds() {
@@ -96,6 +98,12 @@ public class Functions {
 			} else if(aFile.getString(".Status.POWER").equals("Shutdown")) {
 				return config.getString(".Variables.PowerShutdown");
 			}
+		} else if (mode.toUpperCase().equals(GetCmds().get(4).toUpperCase()) || mode.toUpperCase().equals("BUSY")) {
+			//BUSY
+			return (aFile.getBoolean(".Status.BUSY")) ? "true" : "false";
+		} else if (mode.toUpperCase().equals(GetCmds().get(5).toUpperCase()) || mode.toUpperCase().equals("STATION")) {
+			//STATION
+			return (aFile.getBoolean(".Status.STATION")) ? "true" : "false";
 		} else {return "&c! MODE NOT FOUND !";}
 		return null;
 	}
@@ -103,9 +111,9 @@ public class Functions {
 	public void sendMessage(CommandSender sender, String msgName, String attractionName, String args) {
 		if(sender == null) {return;}
 		if(config.contains(".Messages." + msgName) && !config.getString(".Messages." + msgName).equals("")) {
-			String prefix = config.getString(".Messages.Prefix").equals("none") ? "" : config.getString(".Messages.Prefix");
+			String prefix = config.getString(".Messages.Prefix").equals("") ? "" : config.getString(".Messages.Prefix");
 			String msg = config.getString(".Messages." + msgName).replaceAll("%attraction%", attractionName).replaceAll("%args%", String.valueOf(args) + "&r").replaceAll("%prefix%", prefix);
-			if(plugin.papiPresent()) {msg = PlaceholderAPI.setPlaceholders((OfflinePlayer) sender, msg);}
+			if(plugin.papiPresent() && sender instanceof Player) {msg = PlaceholderAPI.setPlaceholders((Player) null, msg);}
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
 		}
 	}

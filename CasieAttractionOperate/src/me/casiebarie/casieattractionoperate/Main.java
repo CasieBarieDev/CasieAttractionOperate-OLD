@@ -53,14 +53,12 @@ public class Main extends JavaPlugin{
 	public void LoadSample() {
 		File sampleFolder = new File(getDataFolder(), "Attractions");
 		File sampleFile = new File(sampleFolder, "Sample.yml");
-		
 		if(!sampleFile.exists()) {
 			this.getLogger().info("Sample file not found! Making one.");
 			sampleFolder.mkdir();
 			try {sampleFile.createNewFile();
 			} catch (Exception e) {e.printStackTrace();}
-		}
-		copy(getResource("sample.yml"), sampleFile);
+		}copy(getResource("sample.yml"), sampleFile);
 	}
 	public void copy(InputStream in, File file) {
 		try {
@@ -70,8 +68,6 @@ public class Main extends JavaPlugin{
 			while((len=in.read(buf))>0) {out.write(buf,0,len);}
 			out.close();
 			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {e.printStackTrace();}
 	}
 }

@@ -7,11 +7,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class Expansion extends PlaceholderExpansion {
 	private Main plugin;
-	
-	public Expansion(Main plugin) {
-		this.plugin = plugin;
-	}
-	
+	public Expansion(Main plugin) {this.plugin = plugin;}
 	@Override
 	public boolean persist() {return true;}
 	@Override
@@ -22,7 +18,6 @@ public class Expansion extends PlaceholderExpansion {
 	public String getIdentifier() {return "cao";}
 	@Override
 	public String getVersion() {return plugin.getDescription().getVersion();}
-	
 	@Override
 	public String onPlaceholderRequest(Player player, String identifier) {
 		if(player == null) {return "";}

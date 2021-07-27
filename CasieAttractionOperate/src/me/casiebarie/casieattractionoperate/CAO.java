@@ -35,7 +35,7 @@ public class CAO implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		config = f.GetConfig();
-		String usageMSG = "<" + f.GetCmds().get(0) + "/"  + f.GetCmds().get(1) + "/"  + f.GetCmds().get(2) + "/"  + f.GetCmds().get(3) + "/"  + f.GetCmds().get(4) + "/"  + f.GetCmds().get(5) + ">" ;
+		String usageMSG = f.getUsageMSG();
 		//CAO
 		if(cmd.getName().equalsIgnoreCase("CAO")) {
 			if(sender.hasPermission("CAO.use") && args.length >= 2 && args.length <= 3) {
@@ -70,6 +70,7 @@ public class CAO implements CommandExecutor{
 				if(args.length == 1 || args.length == 2) {
 					if(args[0].toUpperCase().equals("RELOADCONFIG")) {
 						f.reloadConfig(sender);
+						plugin.LoadSample();
 					} else if (args[0].toUpperCase().equals("RELOADATTRACTION") && args.length == 2) {
 						File aFile1 = new File(plugin.getDataFolder() + "/" + config.getString(".Attractions." + args[1]));
 						FileConfiguration aFile = YamlConfiguration.loadConfiguration(aFile1);
@@ -147,6 +148,7 @@ public class CAO implements CommandExecutor{
 	//Power
 	public void power(CommandSender sender, String aName, String mode, File aFile1, FileConfiguration aFile, String aWorld) {
 		config = f.GetConfig();
+		String usageMSG = f.getUsageMSG();
 		if(mode.toUpperCase().equals("TOGGLE") || mode.toUpperCase().equals("DONE")) {
 			if(mode.toUpperCase().equals("TOGGLE")) {
 				if(aFile.getString(".Status.POWER").equals("Enabled") && aFile.getBoolean(".Status.RELEASE") == true) {
@@ -169,7 +171,7 @@ public class CAO implements CommandExecutor{
 			}
 			saveAttractionFile(aFile, aFile1);
 			varControl(aFile1, aFile, aWorld);
-		} else {f.sendMessage(sender, "Usage", aName, "");}
+		} else {f.sendMessage(sender, "Usage", aName, usageMSG);}
 	}
 	
 	//Busy

@@ -44,15 +44,10 @@ public class SignClick implements Listener {
 							if(aFile.getBoolean(".Settings.ClickSign") && player.hasPermission("CAO.sign")) {
 								e.setCancelled(true);
 								if(!aFile.getBoolean(".Settings.ClickSignMessage")) {player = null;}
-								if(mode.equals("Restraints")) {
-									plugin.api.restraints(player, attractionName);
-								} else if(mode.equals("Gates")) {
-									plugin.api.gates(player, attractionName);
-								} else if(mode.equals("Release")) {
-									plugin.api.release(player, attractionName);
-								} else if(mode.equals("Power")) {
-									plugin.api.power(player, attractionName, "TOGGLE");
-								}
+								if(mode.equals("Restraints")) {plugin.api.restraints(player, attractionName);
+								} else if(mode.equals("Gates")) {plugin.api.gates(player, attractionName);
+								} else if(mode.equals("Release")) {plugin.api.release(player, attractionName);
+								} else if(mode.equals("Power")) {plugin.api.power(player, attractionName, "TOGGLE");}
 							}
 						}
 					} catch (NumberFormatException | NullPointerException ex) {}

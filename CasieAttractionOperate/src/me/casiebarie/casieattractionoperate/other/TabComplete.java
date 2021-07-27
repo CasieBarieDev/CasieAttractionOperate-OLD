@@ -27,7 +27,7 @@ public class TabComplete implements TabCompleter {
 		plugin.getCommand("CAOINFO").setTabCompleter(this);
 	}
 	
-	private enum TrueFalse{TRUE, FALSE}
+	private enum trueFalse{TRUE, FALSE}
 	private enum powerMode{TOGGLE, DONE}
 	private enum reloadMode{ReloadConfig, ReloadAttraction}
 	private enum infoMode{Setup, Commands, Placeholders, Support}
@@ -55,10 +55,10 @@ public class TabComplete implements TabCompleter {
 			}
 			if(args.length == 3 && (args[1].toUpperCase().equals(modes.get(5).toUpperCase()) || args[1].toUpperCase().equals(modes.get(4).toUpperCase()))) {
 				if(!args[2].equals("")) {
-					for(TrueFalse value : TrueFalse.values()) {
-						if (value.name().toUpperCase().startsWith(args[2].toUpperCase())) {completions.add(value.name().toLowerCase());}
+					for(trueFalse value : trueFalse.values()) {
+						if (value.toString().toUpperCase().startsWith(args[2].toUpperCase())) {completions.add(value.name().toLowerCase());}
 					}
-				} else {for(TrueFalse value : TrueFalse.values()) {completions.add(value.name().toLowerCase());}}
+				} else {for(trueFalse value : trueFalse.values()) {completions.add(value.toString().toLowerCase());}}
 			} else if (args.length == 3 && args[1].toUpperCase().equals(modes.get(3).toUpperCase())) {
 				if(!args[2].equals("")) {
 					for(powerMode value : powerMode.values()) {
