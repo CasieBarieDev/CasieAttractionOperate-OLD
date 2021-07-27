@@ -47,7 +47,6 @@ public class InfoCommand implements CommandExecutor {
 				.append("\nSETUP:").color(ChatColor.LIGHT_PURPLE).bold(true).append("\nTo create a new attraction copy the 'Sample' file and rename it to the name of your attraction. Go into the config file and put the name and location of the file under 'Attractions:'. Put in your attraction file all the locations of your system. Tweak the settings and your good to go!").color(ChatColor.DARK_GREEN).bold(false)
 				.append("\n--------------------------------------------------").color(ChatColor.GOLD).bold(false).create());
 	}
-
 	@SuppressWarnings("deprecation")
 	public void page2(CommandSender sender) {
 		final ArrayList<String> modes = this.f.GetCmds();
@@ -64,7 +63,6 @@ public class InfoCommand implements CommandExecutor {
 				.append("\n/caoadmin ReloadAttraction ").color(ChatColor.YELLOW).append("<attraction>").color(ChatColor.GOLD).append(" - Reload the variables of the attraction.").color(ChatColor.DARK_AQUA)
 				.append("\n--------------------------------------------------").color(ChatColor.GOLD).bold(false).create());
 	}
-
 	@SuppressWarnings("deprecation")
 	public void page3(CommandSender sender) {
 		sender.spigot().sendMessage(
@@ -74,7 +72,6 @@ public class InfoCommand implements CommandExecutor {
 				.append("\n\nAll the custom messages can include PAPI placeholders.").color(ChatColor.DARK_GREEN)
 				.append("\n--------------------------------------------------").color(ChatColor.GOLD).bold(false).create());
 	}
-
 	@SuppressWarnings("deprecation")
 	public void page4(CommandSender sender) {
 		sender.spigot().sendMessage(

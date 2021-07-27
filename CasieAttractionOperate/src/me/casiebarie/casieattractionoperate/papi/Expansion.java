@@ -1,7 +1,6 @@
 package me.casiebarie.casieattractionoperate.papi;
 
 import org.bukkit.entity.Player;
-
 import me.casiebarie.casieattractionoperate.Main;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 

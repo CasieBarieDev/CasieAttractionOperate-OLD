@@ -23,8 +23,7 @@ import net.md_5.bungee.api.ChatColor;
 public class CAO implements CommandExecutor{
 	private Main plugin;
 	private Functions f;
-	private static FileConfiguration config;
-	
+	private static FileConfiguration config;	
 	public CAO(Main plugin, Functions f) {
 		this.plugin = plugin;
 		this.f = f;

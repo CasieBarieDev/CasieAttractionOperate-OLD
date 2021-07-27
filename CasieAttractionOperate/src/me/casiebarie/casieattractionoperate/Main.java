@@ -20,7 +20,6 @@ public class Main extends JavaPlugin{
 	public void onEnable() {
 		saveDefaultConfig();
 		LoadSample();
-		
 		Functions f = new Functions(this);
 		CAO cao = new CAO(this, f);
 		new InfoCommand(this, f);
@@ -28,7 +27,6 @@ public class Main extends JavaPlugin{
 		new SignClick(this, f);
 		api = new API(this, cao, f);
 		if(papiPresent()) {new Expansion(this).register();}
-		
 		//UpdateChecker
 		new UpdateChecker(this, 93203).getVersion(version -> {
 			if(this.getDescription().getVersion().equalsIgnoreCase(version)) {

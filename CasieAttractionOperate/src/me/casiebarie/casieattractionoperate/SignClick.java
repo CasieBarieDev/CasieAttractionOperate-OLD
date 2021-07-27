@@ -16,13 +16,11 @@ public class SignClick implements Listener {
 	private Main plugin;
 	private Functions f;
 	private static FileConfiguration config;
-	
 	public SignClick(Main plugin, Functions f) {
 		this.plugin = plugin;
 		this.f = f;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 	}
-	
 	private enum modes {Restraints, Gates, Release, Power}
 	
 	@EventHandler

@@ -18,7 +18,6 @@ import net.md_5.bungee.api.ChatColor;
 public class Functions {
 	private static FileConfiguration config;
 	private Main plugin;
-	
 	public Functions(Main plugin) {
 		this.plugin = plugin;
 		reloadConfig(null);

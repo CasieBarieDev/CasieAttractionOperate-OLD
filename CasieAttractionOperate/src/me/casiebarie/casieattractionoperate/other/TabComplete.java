@@ -18,7 +18,6 @@ public class TabComplete implements TabCompleter {
 	private Main plugin;
 	private Functions f;
 	private FileConfiguration config;
-	
 	public TabComplete(Main plugin, Functions f) {
 		this.plugin = plugin;
 		this.f = f;

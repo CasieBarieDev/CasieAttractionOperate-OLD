@@ -14,7 +14,6 @@ public class API {
 	private CAO cao;
 	private Functions f;
 	private FileConfiguration config;
-	
 	public API(Main plugin, CAO cao, Functions f) {
 		this.plugin = plugin;
 		this.cao = cao;
